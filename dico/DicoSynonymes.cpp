@@ -339,6 +339,10 @@ namespace TP3
 	void DicoSynonymes::ajouterSynonyme(const std::string& motRadical, const std::string& motSynonyme, int& numGroupe){
 		NoeudDicoSynonymes * noeud_courant = trouver_noeud_radical(motRadical);
 		NoeudDicoSynonymes * noeud_cible ;
+
+		if(numGroupe >-1 && synonyme_existe(motRadical,motSynonyme,numGroupe)){
+			throw std::invalid_argument("le synonyme est deja dans la liste");
+		}
 		try{
 			NoeudDicoSynonymes * noeud_cible = trouver_noeud_radical(motSynonyme);
 		}	catch(const std::exception){
@@ -357,6 +361,20 @@ namespace TP3
 
 	}
 
+	bool DicoSynonymes::synonyme_existe(const  std::string & motRadical,const std::string & motSynonyme, int position ) const{
+		NoeudDicoSynonymes * noeud_courant = trouver_noeud_radical(motRadical);
+		if(position > noeud_courant->appSynonymes.size()-1){
+			throw std::invalid_argument("La position recherchee n'existe pas");
+		}
+		for(auto syn : groupesSynonymes[noeud_courant->appSynonymes[position]]){
+			if(motSynonyme ==  syn->radical){
+				return true;
+			}
+		}
+
+		return false;
+
+	}
 
 	/**
 	 * \brief Fonction qui attribue un score de similitude entre deux chaine de caractere

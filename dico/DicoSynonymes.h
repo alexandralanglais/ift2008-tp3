@@ -178,7 +178,7 @@ namespace TP3
 		int nbRadicaux;                                       // Nombre de noeuds dans l'arbre
 		std::vector< std::list<NoeudDicoSynonymes*> > groupesSynonymes;	// Tableau de groupes de synonymes dont chaque élément est une liste
       	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	  	// de pointeurs sur des noeuds de l'arbre représentant les radicaux.
-
+		bool synonyme_existe(const std::string & motRadical,const std::string & motSynonyme, int position ) const;
 		void destructeur_recursif(NoeudDicoSynonymes*& noeud);
 		NoeudDicoSynonymes * trouver_noeud_radical(const std::string & radical) const;
       // Ajoutez vos méthodes privées ici !
