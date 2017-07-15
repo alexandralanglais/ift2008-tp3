@@ -155,6 +155,10 @@ namespace TP3
 	 */
 
 	std::string DicoSynonymes::rechercherRadical(const std::string& mot) const{
+		if(estVide()){
+			throw std::invalid_argument("l'arbre ne contient pas de noeuds");
+		}
+
 		NoeudDicoSynonymes * noeud_courant = racine;
 		float score=0;
 		std::string meilleur_match;
@@ -185,6 +189,11 @@ namespace TP3
 		NoeudDicoSynonymes * noeud_courant = trouver_noeud_radical(motRadical);
 
 		if(noeud_courant != nullptr){
+			for(auto flex: noeud_courant->flexions){
+				if(flex==motFlexion){
+					throw std::invalid_argument("La flexion existe deja");
+				}
+			}
 			noeud_courant->flexions.push_back(motFlexion);
 		}
 	}
@@ -401,6 +410,7 @@ namespace TP3
 	 * \param[in] motRadical radical a ajouter
 	 */
 	void DicoSynonymes::ajouterRadical(const std::string& motRadical){
+
 		ajouterEmplacementVide(racine,motRadical);
 
 	}
@@ -413,6 +423,10 @@ namespace TP3
 	 * \param[in] data valeur de l'element a ajouter
 	 */
 	void DicoSynonymes::ajouterEmplacementVide(NoeudDicoSynonymes *& noeud_destination, const std::string & data) const {
+		if(noeud_destination != nullptr){
+			noeud_destination->hauteur ++;
+		}
+
 		if(noeud_destination==0){
 			noeud_destination = new NoeudDicoSynonymes(data);
 			return;
